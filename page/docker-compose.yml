@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  frontend:
+    build: &node_image
+      context: ./image
+      dockerfile: Dockerfile 
+    volumes:
+      - type: bind 
+        source: ./ws/
+        target: /home/node/ws
+    ports:
+      - 4000:4000
+    environment:
+      - SERVICE_NAME=frontend
