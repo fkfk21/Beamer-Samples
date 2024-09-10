@@ -13,7 +13,7 @@ function usePDFs() {
 
   useEffect(() => {
     const fetchPDFs = async () => {
-      const response = await fetch(`/${__PROJECT_BASENAME__}/test.txt`);
+      const response = await fetch(`/${__PROJECT_BASENAME__}/files.txt`);
       const content = await response.text();
       const pdfs_list = content.split('\n');
       const pdfs = pdfs_list.reduce((acc, pdf) => {
