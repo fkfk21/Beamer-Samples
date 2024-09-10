@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import { About } from '@/component/page/about';
 import { Footer } from '@/component/page/footer';
 import { Button, Link, Stack } from '@mui/material';
+import { GitHub, PictureAsPdfOutlined } from '@mui/icons-material';
 
 function usePDFs() {
   const [pdfs, setPDFs] = React.useState<Record<string, string>>({});
@@ -46,6 +47,17 @@ export function MainPage() {
         Beamer Samples
       </Typography>
 
+      <Box display="flex" justifyContent="center" alignItems="center" p={2}>
+        <GitHub sx={{ mr: 1 }} />
+        <Link
+          href="https://github.com/fkfk21/Beamer-Samples"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Github Repository
+        </Link>
+      </Box>
+
       <Box display="flex" height="80vh" width={'100%'}>
         {/* ボタンを縦に並べるエリア */}
         <Box maxHeight={'80vh'} p={2} sx={{ overflowY: 'auto' }}>
@@ -82,6 +94,20 @@ export function MainPage() {
           )}
         </Box>
       </Box>
+
+      {/* PDFを新しいタブで開くリンク */}
+      {selected_pdf && (
+        <Box display="flex" justifyContent="center" alignItems="center" p={2}>
+          <PictureAsPdfOutlined sx={{ mr: 1 }} />
+          <Link
+            href={`/${__PROJECT_BASENAME__}/${selected_pdf}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open PDF in new tab
+          </Link>
+        </Box>
+      )}
 
       <Container maxWidth="md">
         <Box
