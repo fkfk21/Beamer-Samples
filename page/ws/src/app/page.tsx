@@ -42,7 +42,9 @@ export function MainPage() {
 
   return (
     <>
-      <Typography variant="h4">Beamer Samples</Typography>
+      <Typography variant="h4" px={3}>
+        Beamer Samples
+      </Typography>
 
       <Box display="flex" height="80vh" width={'100%'}>
         {/* ボタンを縦に並べるエリア */}
@@ -52,7 +54,7 @@ export function MainPage() {
               <Button
                 key={index}
                 sx={{ textTransform: 'none' }}
-                variant="contained"
+                variant={selected_pdf === pdf ? 'outlined' : 'contained'}
                 onClick={() => handlePDFClick(pdf)}
               >
                 {theme_name}
