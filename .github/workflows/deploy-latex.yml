@@ -22,6 +22,7 @@ jobs:
               paper_name=$(echo ${dirname} | tr ' ' '_')
               mv output/main.pdf output/${paper_name}.pdf
             done
+            find output -type f ! -name "*.pdf" -delete
             ls output > output/files.txt
 
       - name: Upload Artifacts for PDF
