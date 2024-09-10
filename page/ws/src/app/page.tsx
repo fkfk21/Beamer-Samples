@@ -44,20 +44,22 @@ export function MainPage() {
     <>
       <Typography variant="h4">Beamer Samples</Typography>
 
-      <Box display="flex" height="70vh">
+      <Box display="flex" height="80vh">
         {/* ボタンを縦に並べるエリア */}
-        <Stack spacing={2} p={2}>
-          {Object.entries(pdfs).map(([theme_name, pdf], index) => (
-            <Button key={index} variant="contained" onClick={() => handlePDFClick(pdf)}>
-              {theme_name}
-            </Button>
-          ))}
-        </Stack>
+        <Box maxHeight={'80vh'} p={2} sx={{ overflowY: 'auto' }}>
+          <Stack spacing={2}>
+            {Object.entries(pdfs).map(([theme_name, pdf], index) => (
+              <Button key={index} variant="contained" onClick={() => handlePDFClick(pdf)}>
+                {theme_name}
+              </Button>
+            ))}
+          </Stack>
+        </Box>
 
         {/* PDF表示エリア */}
         <Box flexGrow={1} p={2}>
           {selected_pdf ? (
-            <Document file={selected_pdf}>
+            <Document file={`/${__PROJECT_BASENAME__}/${selected_pdf}`}>
               <Page pageNumber={1} />
             </Document>
           ) : (
