@@ -81,23 +81,23 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Download Artifacts
+      - name: Download Index Page Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: page-dist
+          path: page-dist
+
+      - name: Download Latex PDFs Artifacts
         uses: actions/download-artifact@v3
         with:
           name: latex-output-files
           path: latex-output
       
-      - name: Download Artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: page-dist
-          path: page-dist
-      
       - name: Setup Deploy Pages 
         run: |
           mkdir -p dist
-          cp -r latex-output/* dist/
           cp -r page-dist/* dist/
+          cp -r latex-output/* dist/
       
       - name: Upload Deploy Pages
         uses: actions/upload-pages-artifact@v3
