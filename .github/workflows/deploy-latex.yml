@@ -97,6 +97,8 @@ jobs:
         run: |
           mkdir -p dist
           cp -r page-dist/* dist/
+          ls -l dist
+          ls -l latex-output
           cp -r latex-output/* dist/
       
       - name: Upload Deploy Pages
