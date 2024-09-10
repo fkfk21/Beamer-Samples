@@ -1,0 +1,51 @@
+name: Build LaTeX Documents
+on: [push]
+jobs:
+  latex-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Build LaTeX Document
+        uses: xu-cheng/texlive-action@v2
+        with:
+          scheme: full
+          run: |
+            echo "Hello, LaTeX!"
+            mkdir -p output
+            IFS=$'\n'
+            for texfile in $(find . -maxdepth 2 -name 'main.tex'); do
+              echo "Building $texfile..."
+              dirname=$(basename $(dirname "$texfile"))
+              latexmk -pdf -output-directory=output "$texfile"
+              paper_name=$(echo ${dirname} | tr ' ' '_')
+              mv output/main.pdf output/${paper_name}.pdf
+            done
+            find output -type f ! -name '*.pdf' -exec rm -f {} +
+            echo "<html><body><h1>PDFs</h1><ul>" > index.html
+            for pdf in output/*.pdf; do
+              filename=$(basename "$pdf")
+              echo "<li><a href=\"${filename}\">${filename}</a></li>" >> index.html
+            done
+            echo "</ul></body></html>" >> index.html
+            mv index.html output/index.html
+
+      - name: Upload Artifacts for PDF
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: output
+
+  deploy-to-pages:
+    needs: latex-build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
