@@ -32,7 +32,6 @@ jobs:
 
   
   build-index-page:
-    needs: latex-build
     permissions:
       contents: read
       pages: write
@@ -70,7 +69,9 @@ jobs:
           path: ./page/ws/dist/**
 
   deploy-to-pages:
-    needs: latex-build
+    needs: 
+      - latex-build
+      - build-index-page
     permissions:
       pages: write
       id-token: write
