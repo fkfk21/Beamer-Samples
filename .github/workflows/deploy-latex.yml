@@ -1,4 +1,4 @@
-name: Build LaTeX Documents
+name: Build LaTeX Documents and Deploy to GitHub Pages
 on: [push]
 jobs:
   latex-build:
@@ -35,6 +35,47 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: output
+  
+  build-index-page:
+    needs: latex-build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: true
+    defaults:
+      run:
+        working-directory: ./page/ws
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - run: echo "${{ github.workspace }}"
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './page/ws/package-lock.json'
+      
+      - name: Install Dependencies
+        run: npm install
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Upload Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./page/ws/dist
+      
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
   deploy-to-pages:
     needs: latex-build

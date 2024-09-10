@@ -91,4 +91,18 @@
       }
   ],
   "latex-workshop.latex.autoBuild.run": "never",
+
+
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript]": {
+    "editor.formatOnSave": true,
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true,
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///home/fkfk21/mysrc/react-vite-actions/.github/workflows/deploy.yml"
+  },
+
 }
