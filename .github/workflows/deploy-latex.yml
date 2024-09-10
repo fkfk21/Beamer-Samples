@@ -22,6 +22,7 @@ jobs:
               paper_name=$(echo ${dirname} | tr ' ' '_')
               mv output/main.pdf output/${paper_name}.pdf
             done
+            ls output > output/files.txt
 
       - name: Upload Artifacts for PDF
         uses: actions/upload-artifact@v3
@@ -30,46 +31,43 @@ jobs:
           path: output/**
 
   
-  # build-index-page:
-  #   needs: latex-build
-  #   permissions:
-  #     contents: read
-  #     pages: write
-  #     id-token: write
-  #   concurrency:
-  #     group: 'pages'
-  #     cancel-in-progress: true
-  #   defaults:
-  #     run:
-  #       working-directory: ./page/ws
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+  build-index-page:
+    needs: latex-build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: true
+    defaults:
+      run:
+        working-directory: ./page/ws
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       
-  #     - run: echo "${{ github.workspace }}"
+      - run: echo "${{ github.workspace }}"
       
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '20'
-  #         cache: 'npm'
-  #         cache-dependency-path: './page/ws/package-lock.json'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './page/ws/package-lock.json'
       
-  #     - name: Install Dependencies
-  #       run: npm install
+      - name: Install Dependencies
+        run: npm install
       
-  #     - name: Build
-  #       run: npm run build
+      - name: Build
+        run: npm run build
       
-  #     - name: Upload Artifacts
-  #       uses: actions/upload-pages-artifact@v3
-  #       with:
-  #         path: ./page/ws/dist
-      
-  #     - name: Deploy to Github Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v4
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: page-dist
+          path: ./page/ws/dist/**
 
   deploy-to-pages:
     needs: latex-build
@@ -87,10 +85,17 @@ jobs:
           name: latex-output-files
           path: latex-output
       
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: page-dist
+          path: page-dist
+      
       - name: Setup Deploy Pages 
         run: |
           mkdir -p dist
           cp -r latex-output/* dist/
+          cp -r page-dist/* dist/
       
       - name: Upload Deploy Pages
         uses: actions/upload-pages-artifact@v3
