@@ -68,7 +68,7 @@ export function MainPage() {
         </Box>
       </Box>
 
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <Box
           sx={{
             my: 4,
@@ -77,9 +77,6 @@ export function MainPage() {
             alignItems: 'center',
           }}
         >
-          <Typography sx={{ mt: 3 }} variant="h5" component="h1" gutterBottom>
-            Vite.js + React.JS + TypeScript + MUI v5
-          </Typography>
           <About />
           <Footer />
         </Box>
