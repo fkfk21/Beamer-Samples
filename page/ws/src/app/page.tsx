@@ -177,7 +177,7 @@ export function MainPage() {
               sm: '30%',
               md: '40%',
               lg: '50%',
-              xl: '60%',
+              xl: '50%',
             }}
             p={2}
             sx={{ overflowY: 'auto' }}
