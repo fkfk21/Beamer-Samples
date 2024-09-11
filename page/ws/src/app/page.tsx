@@ -20,7 +20,6 @@ import {
   useMediaQuery,
   useTheme,
   CardContent,
-  CardHeader,
 } from '@mui/material';
 import { GitHub, PictureAsPdfOutlined } from '@mui/icons-material';
 
@@ -175,10 +174,10 @@ export function MainPage() {
             display={'flex'}
             maxHeight={'80vh'}
             maxWidth={{
-              sm: '20%',
-              md: '30%',
-              lg: '40%',
-              xl: '50%',
+              sm: '30%',
+              md: '40%',
+              lg: '50%',
+              xl: '60%',
             }}
             p={2}
             sx={{ overflowY: 'auto' }}
