@@ -23,7 +23,7 @@ jobs:
               mv output/main.pdf output/${paper_name}.pdf
             done
             find output -type f ! -name "*.pdf" -delete
-            find output -type f -name "*.pdf" basename {} \; > output/files.txt
+            ls output > output/files.txt
 
       - name: Upload Artifacts for PDF
         uses: actions/upload-artifact@v3
