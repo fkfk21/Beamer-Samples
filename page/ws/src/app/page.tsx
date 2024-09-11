@@ -18,6 +18,8 @@ function usePDFs() {
       const content = await response.text();
       const pdfs_list = content.split('\n');
       const pdfs = pdfs_list.reduce((acc, pdf) => {
+        if (pdf === '') return acc;
+        if (!pdf.endsWith('.pdf')) return acc;
         const theme_name = pdf.split('.')[0];
         acc[theme_name] = pdf;
         return acc;
