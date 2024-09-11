@@ -194,13 +194,16 @@ export function MainPage() {
                         width={thumbnails[theme_name]?.width}
                         src={thumbnails[theme_name]?.uri}
                         alt={theme_name}
+                        sx={{
+                          outline: '1px solid',
+                        }}
                       />
                       <CardContent>
                         <Typography
                           variant="h6"
                           align="center"
                           fontWeight="Bold"
-                          color={selected_pdf === pdf ? 'textPrimary' : 'error'}
+                          color={selected_pdf === pdf ? 'error' : 'textPrimary'}
                         >
                           {theme_name}
                         </Typography>
