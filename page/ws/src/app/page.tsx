@@ -174,10 +174,10 @@ export function MainPage() {
             display={'flex'}
             maxHeight={'80vh'}
             maxWidth={{
-              sm: '30%',
-              md: '40%',
-              lg: '50%',
-              xl: '50%',
+              sm: '270px', // 250 + 20
+              md: '530px', // 250x2 + 30
+              lg: '790px', // 250x3 + 40
+              xl: '1050px', // 250x4 + 50
             }}
             p={2}
             sx={{ overflowY: 'auto' }}
